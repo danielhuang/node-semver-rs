@@ -17,7 +17,7 @@ use nom::{Err, IResult};
 
 use crate::{extras, number, Identifier, SemverError, SemverErrorKind, SemverParseError, Version};
 
-#[derive(Clone, Debug, Eq, PartialEq, Hash)]
+#[derive(Clone, Debug, Eq, PartialEq, Hash, PartialOrd, Ord)]
 struct BoundSet {
     upper: Bound,
     lower: Bound,
@@ -159,7 +159,7 @@ impl fmt::Display for BoundSet {
     }
 }
 
-#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash, PartialOrd, Ord)]
 enum Operation {
     Exact,
     GreaterThan,
@@ -168,7 +168,7 @@ enum Operation {
     LessThanEquals,
 }
 
-#[derive(Debug, Clone, Eq, PartialEq, Hash)]
+#[derive(Debug, Clone, Eq, PartialEq, Hash, PartialOrd, Ord)]
 enum Predicate {
     Excluding(Version), // < and >
     Including(Version), // <= and >=
@@ -282,7 +282,7 @@ details that allow some more interesting set-level operations.
 
 For details on supported syntax, see https://github.com/npm/node-semver#advanced-range-syntax
 */
-#[derive(Clone, Debug, Eq, PartialEq, Hash)]
+#[derive(Clone, Debug, Eq, PartialEq, Hash, PartialOrd, Ord)]
 pub struct Range(Vec<BoundSet>);
 
 impl fmt::Display for Operation {
